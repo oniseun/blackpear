@@ -6,7 +6,11 @@ import { ObservationService } from './observation.service';
 import { ObservationController } from './observation.controller';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: Observation.name, schema: ObservationSchema }])],
+  imports: [
+    MongooseModule.forFeature([
+      { name: Observation.name, schema: ObservationSchema },
+    ]),
+  ],
   controllers: [ObservationController],
   providers: [ObservationService, ObservationRepository],
 })

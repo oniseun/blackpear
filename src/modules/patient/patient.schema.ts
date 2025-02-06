@@ -1,34 +1,87 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
+class Identifier {
+  @Prop()
+  label?: string;
+
+  @Prop({ required: true })
+  system: string;
+
+  @Prop({ required: true, type: Number })
+  value: number;
+}
+
+class Name {
+  @Prop()
+  use?: string;
+
+  @Prop({ required: true })
+  text: string;
+
+  @Prop({ required: true })
+  family: string;
+
+  @Prop({ type: [String], required: true })
+  given: string[];
+
+  @Prop({ type: [String] })
+  prefix?: string[];
+}
+
+class Telecom {
+  @Prop({ required: true })
+  system: string;
+
+  @Prop({ required: true })
+  value: string;
+
+  @Prop()
+  use?: string;
+}
+
+class Address {
+  @Prop()
+  use?: string;
+
+  @Prop({ required: true })
+  text: string;
+
+  @Prop()
+  city?: string;
+
+  @Prop()
+  state?: string;
+
+  @Prop()
+  postalCode?: string;
+}
+
 @Schema()
 export class Patient extends Document {
   @Prop({ required: true })
-  id: string;
+  resourceType: string;
 
-  @Prop({ required: true, unique: true })
-  nhsNumber: string;
+  @Prop({ required: true, unique: true, type: Number })
+  id: number;
 
-  @Prop({ required: true })
-  firstName: string;
+  @Prop({ type: [Identifier], required: true })
+  identifier: Identifier[];
 
-  @Prop({ required: true })
-  lastName: string;
+  @Prop({ type: [Name], required: true })
+  name: Name[];
 
-  @Prop()
-  gender: string;
+  @Prop({ type: [Telecom] })
+  telecom?: Telecom[];
 
-  @Prop()
-  birthDate: string;
+  @Prop({ required: true, enum: ['male', 'female', 'other', 'unknown'] })
+  gender: 'male' | 'female' | 'other' | 'unknown';
 
-  @Prop()
-  phone: string;
+  @Prop({ type: Date })
+  birthDate?: Date;
 
-  @Prop()
-  email?: string;
-
-  @Prop()
-  address: string;
+  @Prop({ type: [Address] })
+  address?: Address[];
 }
 
 export const PatientSchema = SchemaFactory.createForClass(Patient);

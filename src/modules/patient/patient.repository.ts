@@ -5,13 +5,22 @@ import { Patient } from './patient.schema';
 
 @Injectable()
 export class PatientRepository {
-  constructor(@InjectModel(Patient.name) private patientModel: Model<Patient>) {}
+  constructor(
+    @InjectModel(Patient.name) private patientModel: Model<Patient>,
+  ) {}
 
-  async findByNhsNumber(nhsNumber: string): Promise<Patient | null> {
-    return this.patientModel.findOne({ nhsNumber }).exec();
-  }
-
-  async findByLastName(lastName: string): Promise<Patient[]> {
-    return this.patientModel.find({ lastName }).exec();
+  async findByNhsNumberOrSurname(searchValue: string): Promise<Patient[]> {
+    return this.patientModel
+      .find({
+        $or: [
+          {
+            identifier: {
+              $elemMatch: { label: 'NHS', value: Number(searchValue) },
+            },
+          },
+          { 'name.family': { $regex: new RegExp(`^${searchValue}$`, 'i') } },
+        ],
+      })
+      .exec();
   }
 }

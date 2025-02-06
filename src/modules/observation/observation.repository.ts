@@ -5,7 +5,9 @@ import { Observation } from './observation.schema';
 
 @Injectable()
 export class ObservationRepository {
-  constructor(@InjectModel(Observation.name) private observationModel: Model<Observation>) {}
+  constructor(
+    @InjectModel(Observation.name) private observationModel: Model<Observation>,
+  ) {}
 
   async findByPatientId(patientId: string): Promise<Observation[]> {
     return this.observationModel.find({ patientId }).exec();

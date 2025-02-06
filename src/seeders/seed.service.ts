@@ -27,13 +27,13 @@ export class SeedService {
   async seedPatients() {
     const patientsPath = path.join(__dirname, '../../data/patients');
     if (!fs.existsSync(patientsPath)) {
-      this.logger.warn('⚠️ Patients folder not found, skipping...');
+      this.logger.warn('⛔️ Patients folder not found, skipping...');
       return;
     }
 
     const patientsData = this.readJsonFilesFromFolder(patientsPath);
 
-    await this.patientModel.deleteMany(); // Clear existing records
+    await this.patientModel.deleteMany();
     await this.patientModel.insertMany(patientsData);
     this.logger.log(`✅ Seeded ${patientsData.length} patients successfully.`);
   }
@@ -41,13 +41,13 @@ export class SeedService {
   async seedObservations() {
     const observationsPath = path.join(__dirname, '../../data/observations');
     if (!fs.existsSync(observationsPath)) {
-      this.logger.warn('⚠️ Observations folder not found, skipping...');
+      this.logger.warn('⛔️ Observations folder not found, skipping...');
       return;
     }
 
     const observationsData = this.readJsonFilesFromFolder(observationsPath);
 
-    await this.observationModel.deleteMany(); // Clear existing records
+    await this.observationModel.deleteMany();
     await this.observationModel.insertMany(observationsData);
     this.logger.log(
       `✅ Seeded ${observationsData.length} observations successfully.`,
