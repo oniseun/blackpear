@@ -23,48 +23,76 @@ The Blackpear Health API is designed to support healthcare professionals by prov
 
 ### 1️⃣ Clone the Repository
 
-git clone https://github.com/oniseun/blackpear.git
-cd blackpear/backend
+        git clone https://github.com/oniseun/blackpear.git
+        cd blackpear/backend
 
 ### 2️⃣ Use the Correct Node Version
 
-nvm use
+        nvm use
 
-🚀 Running the Application
---------------------------
+How to Use
+----------
 
-### Option 1: Run Everything with Docker (Recommended)
+### 1\. Recommended: Using Docker
 
-This will start the full application including the database, seed data, and backend.
+Ensure your Docker software is running.
 
-npm run docker:app
+1.  Run the app with Docker (this will bootstrap everything: the backend, database, and seeders):
+    
+        npm run docker:app
+    
+2.  Open your browser and head to **Swagger API Docs** to test the app: 
+        [http://localhost:5050/api](http://localhost:5050/api)
 
-### Option 2: Run Only the Database (Then Start Manually)
+### 2\. Alternative: Manual Setup
 
-This starts only MongoDB. You'll need to run seeders manually and start the app separately.
+1.  Use Node.js 16:
+    
+        nvm use
+    
+2.  Set up the environment variables and install dependencies:
+    
+        npm run setup
+    
+3.  Start the PostgreSQL database using Docker:
+    
+        npm run docker:db
 
-npm run docker:db
-npm run setup
-npm run seed
-npm run start:dev
+4.  Run seeders:
+    
+        npm run seed
+    
+5.  Start the application:
+    
+        npm run start
+    
+6.  Open your browser and head to **Swagger API Docs** to test the app: 
+        [http://localhost:5050/api](http://localhost:5050/api)
+
+To Test
+-------
+
+### 1\. Unit and Integration Tests
+
+Run all unit and integration tests using **Jest**:
+
+    npm run test
+
+### 2\. End-to-End (E2E) Tests
+
+Run end-to-end tests using **Jest**:
+
+    npm run test:e2e
+
+The end-to-end tests will execute the test suite located in `/test/app.e2e-spec.ts`.
 
 📜 API Documentation
 --------------------
 
 The API documentation (Swagger UI) is available at:
 
-http://localhost:5050/api
+    http://localhost:5050/api
 
-🧪 Running Tests
-----------------
-
-### Unit Tests
-
-npm run test
-
-### End-to-End Tests
-
-npm run test:e2e
 
 🛠 Additional Information
 -------------------------
