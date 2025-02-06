@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule } from '@nestjs/config';
 import { LoggerModule } from 'nestjs-pino';
 import { PatientModule } from './modules/patient/patient.module';
 import { ObservationModule } from './modules/observation/observation.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
@@ -13,7 +13,6 @@ import { AppService } from './app.service';
       isGlobal: true,
     }),
 
-    // Logger configuration
     LoggerModule.forRoot({
       pinoHttp: {
         transport: {
@@ -26,24 +25,7 @@ import { AppService } from './app.service';
       },
     }),
 
-    // MongoDB connection using ConfigService
-    MongooseModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => ({
-        uri: `mongodb://${configService.get<string>(
-          'DB_USERNAME',
-        )}:${configService.get<string>(
-          'DB_PASSWORD',
-        )}@${configService.get<string>('DB_HOST')}:${configService.get<string>(
-          'DB_PORT',
-        )}/${configService.get<string>('DB_NAME')}`,
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      }),
-    }),
-
-    // Importing domain modules
+    DatabaseModule,
     PatientModule,
     ObservationModule,
   ],

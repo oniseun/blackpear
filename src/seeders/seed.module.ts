@@ -7,19 +7,14 @@ import {
 } from '../modules/observation/observation.schema';
 import { SeedService } from './seed.service';
 import { ConfigModule } from '@nestjs/config';
+import { DatabaseModule } from '../database/database.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    MongooseModule.forRootAsync({
-      useFactory: () => ({
-        uri: `mongodb://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      }),
-    }),
+    DatabaseModule,
     MongooseModule.forFeature([
       { name: Patient.name, schema: PatientSchema },
       { name: Observation.name, schema: ObservationSchema },

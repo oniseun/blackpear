@@ -16,21 +16,41 @@ export class SeedService {
     private readonly observationModel: Model<Observation>,
   ) {}
 
-  async seedPatients() {
-    const filePath = path.join(__dirname, '../../data/patients.json');
-    const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+  private readJsonFilesFromFolder(folderPath: string): any[] {
+    const files = fs.readdirSync(folderPath);
+    return files.map((file) => {
+      const filePath = path.join(folderPath, file);
+      return JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+    });
+  }
 
-    await this.patientModel.deleteMany();
-    await this.patientModel.insertMany(data);
-    this.logger.log('✅ Patients seeded successfully');
+  async seedPatients() {
+    const patientsPath = path.join(__dirname, '../../data/patients');
+    if (!fs.existsSync(patientsPath)) {
+      this.logger.warn('⚠️ Patients folder not found, skipping...');
+      return;
+    }
+
+    const patientsData = this.readJsonFilesFromFolder(patientsPath);
+
+    await this.patientModel.deleteMany(); // Clear existing records
+    await this.patientModel.insertMany(patientsData);
+    this.logger.log(`✅ Seeded ${patientsData.length} patients successfully.`);
   }
 
   async seedObservations() {
-    const filePath = path.join(__dirname, '../../data/observations.json');
-    const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+    const observationsPath = path.join(__dirname, '../../data/observations');
+    if (!fs.existsSync(observationsPath)) {
+      this.logger.warn('⚠️ Observations folder not found, skipping...');
+      return;
+    }
 
-    await this.observationModel.deleteMany();
-    await this.observationModel.insertMany(data);
-    this.logger.log('✅ Observations seeded successfully');
+    const observationsData = this.readJsonFilesFromFolder(observationsPath);
+
+    await this.observationModel.deleteMany(); // Clear existing records
+    await this.observationModel.insertMany(observationsData);
+    this.logger.log(
+      `✅ Seeded ${observationsData.length} observations successfully.`,
+    );
   }
 }
