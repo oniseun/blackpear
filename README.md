@@ -93,7 +93,7 @@ The end-to-end tests will execute the test suite located in `/test/app.e2e-spec.
 
 The API documentation (Swagger UI) is available at:
 
-    http://localhost:5050/api
+    [http://localhost:5050/api](http://localhost:5050/api)
 
 
 🛠 Additional Information
