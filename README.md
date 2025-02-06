@@ -42,6 +42,7 @@ Ensure your Docker software is running.
         npm run docker:app
     
 2.  Open your browser and head to **Swagger API Docs** to test the app: 
+
         http://localhost:5050/api
 
 ### 2\. Alternative: Manual Setup
@@ -67,6 +68,7 @@ Ensure your Docker software is running.
         npm run start
     
 6.  Open your browser and head to **Swagger API Docs** to test the app: 
+
         http://localhost:5050/api
 
 🧪 Running Tests
@@ -105,63 +107,61 @@ The API documentation (Swagger UI) is available at:
 --------------------
 
 
-blackpear
-
-├── data
-│  ├── observations
-│  │  ├── observation1.json
-│  │  ├── observation2.json
-│  │  ├── observation3.json
-│  │  ├── observation4.json
-│  │  └── observation5.json
-│  └── patients
-│     ├── patient1.json
-│     └── patient2.json
-├── src
-│  ├── database
-│  │  └── database.module.ts
-│  ├── modules
-│  │  ├── observation
-│  │  │  ├── observation.controller.ts
-│  │  │  ├── observation.dto.ts
-│  │  │  ├── observation.module.ts
-│  │  │  ├── observation.repository.ts
-│  │  │  ├── observation.schema.ts
-│  │  │  └── observation.service.ts
-│  │  └── patient
-│  │     ├── patient.controller.ts
-│  │     ├── patient.dto.ts
-│  │     ├── patient.module.ts
-│  │     ├── patient.repository.ts
-│  │     ├── patient.schema.ts
-│  │     └── patient.service.ts
-│  ├── seeders
-│  │  ├── observation.seed.ts
-│  │  ├── patient.seed.ts
-│  │  ├── seed.module.ts
-│  │  ├── seed.service.ts
-│  │  └── seed.ts
-│  ├── .DS_Store
-│  ├── app.controller.spec.ts
-│  ├── app.controller.ts
-│  ├── app.module.ts
-│  ├── app.service.ts
-│  └── main.ts
-├── test
-│  ├── app.e2e-spec.ts
-│  └── jest-e2e.json
-├── .env
-├── .envsample
-├── .eslintrc.js
-├── .gitignore
-├── .nvmrc
-├── .prettierrc
-├── Dockerfile
-├── README.md
-├── docker-compose-db-only.yml
-├── docker-compose.yml
-├── nest-cli.json
-├── package-lock.json
-├── package.json
-├── tsconfig.build.json
-└── tsconfig.json
+*   data
+    *   observations
+        *   observation1.json
+        *   observation2.json
+        *   observation3.json
+        *   observation4.json
+        *   observation5.json
+    *   patients
+        *   patient1.json
+        *   patient2.json
+*   node\_modules
+*   src
+    *   database
+        *   database.module.ts
+    *   modules
+        *   observation
+            *   observation.controller.ts
+            *   observation.dto.ts
+            *   observation.module.ts
+            *   observation.repository.ts
+            *   observation.schema.ts
+            *   observation.service.ts
+        *   patient
+            *   patient.controller.ts
+            *   patient.dto.ts
+            *   patient.module.ts
+            *   patient.repository.ts
+            *   patient.schema.ts
+            *   patient.service.ts
+    *   seeders
+        *   observation.seed.ts
+        *   patient.seed.ts
+        *   seed.module.ts
+        *   seed.service.ts
+        *   seed.ts
+    *   app.controller.ts
+    *   app.controller.spec.ts
+    *   app.module.ts
+    *   app.service.ts
+    *   main.ts
+*   test
+    *   app.e2e-spec.ts
+    *   jest-e2e.json
+*   .env
+*   .envsample
+*   .eslintrc.js
+*   .gitignore
+*   .nvmrc
+*   .prettierrc
+*   docker-compose-db-only.yml
+*   docker-compose.yml
+*   Dockerfile
+*   nest-cli.json
+*   package-lock.json
+*   package.json
+*   README.md
+*   tsconfig.build.json
+*   tsconfig.json
