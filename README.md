@@ -30,8 +30,8 @@ The Blackpear Health API is designed to support healthcare professionals by prov
 
         nvm use
 
-How to Use
-----------
+🚀 Running the Application
+--------------------------
 
 ### 1\. Recommended: Using Docker
 
@@ -69,8 +69,8 @@ Ensure your Docker software is running.
 6.  Open your browser and head to **Swagger API Docs** to test the app: 
         [http://localhost:5050/api](http://localhost:5050/api)
 
-To Test
--------
+🧪 Running Tests
+----------------
 
 ### 1\. Unit and Integration Tests
 
