@@ -1,4 +1,11 @@
-import { Controller, Get, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Query,
+  ParseIntPipe,
+  BadRequestException,
+  NotFoundException,
+} from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { PatientService } from './patient.service';
 import { PatientDto } from './patient.dto';
@@ -15,10 +22,16 @@ export class PatientController {
       'Search for a patient using either an NHS Number (when label is "NHS") or a last name.',
   })
   @ApiQuery({
-    name: 'search',
-    required: true,
-    description: 'Either an NHS Number (numeric) or a last name (string).',
-    example: '1111111112 or Smith',
+    name: 'nhsNumber',
+    required: false,
+    description: 'The NHS number of the patient (must be numeric).',
+    example: 1111111112,
+  })
+  @ApiQuery({
+    name: 'surname',
+    required: false,
+    description: 'The last name (surname) of the patient.',
+    example: 'Smith',
   })
   @ApiResponse({
     status: 200,
@@ -28,19 +41,36 @@ export class PatientController {
   })
   @ApiResponse({
     status: 400,
-    description: 'Bad request. Missing or invalid search parameter.',
+    description: 'Bad request. Either nhsNumber or surname is required.',
   })
-  async getPatient(@Query('search') search: string): Promise<PatientDto[]> {
-    if (!search) {
-      return [
-        {
-          message: 'Provide a search term (NHS Number or Last Name)',
-        } as unknown as PatientDto,
-      ];
+  @ApiResponse({
+    status: 404,
+    description: 'No patients found matching the search criteria.',
+  })
+  async getPatient(
+    @Query('nhsNumber', ParseIntPipe) nhsNumber?: number,
+    @Query('surname') surname?: string,
+  ): Promise<PatientDto[]> {
+    if (!nhsNumber && !surname) {
+      throw new BadRequestException(
+        'Either nhsNumber or surname must be provided.',
+      );
     }
-    const patients = await this.patientService.getPatientByNhsNumberOrSurname(
-      search,
-    );
+
+    let patients = [];
+
+    if (nhsNumber) {
+      patients = await this.patientService.getPatientByNhsNumber(nhsNumber);
+    } else if (surname) {
+      patients = await this.patientService.getPatientsBySurname(surname);
+    }
+
+    if (!patients.length) {
+      throw new NotFoundException(
+        'No patients found matching the search criteria.',
+      );
+    }
+
     return patients.map(PatientDto.fromEntity);
   }
 }

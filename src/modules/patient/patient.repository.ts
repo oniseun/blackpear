@@ -9,17 +9,20 @@ export class PatientRepository {
     @InjectModel(Patient.name) private patientModel: Model<Patient>,
   ) {}
 
-  async findByNhsNumberOrSurname(searchValue: string): Promise<Patient[]> {
+  async findByNhsNumber(patientNhsNumber: number): Promise<Patient[]> {
     return this.patientModel
       .find({
-        $or: [
-          {
-            identifier: {
-              $elemMatch: { label: 'NHS', value: Number(searchValue) },
-            },
-          },
-          { 'name.family': { $regex: new RegExp(`^${searchValue}$`, 'i') } },
-        ],
+        identifier: {
+          $elemMatch: { label: 'NHS', value: patientNhsNumber },
+        },
+      })
+      .exec();
+  }
+
+  async findBySurname(surname: string): Promise<Patient[]> {
+    return this.patientModel
+      .find({
+        'name.family': { $regex: new RegExp(`^${surname}$`, 'i') },
       })
       .exec();
   }

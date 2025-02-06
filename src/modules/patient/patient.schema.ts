@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 
 class Identifier {
   @Prop()
@@ -59,10 +59,10 @@ class Address {
 
 @Schema()
 export class Patient extends Document {
-  @Prop({ required: true })
+  @Prop({ required: true, default: 'Patient' })
   resourceType: string;
 
-  @Prop({ required: true, unique: true, type: Number })
+  @Prop({ required: true, unique: true, type: Number, index: true })
   id: number;
 
   @Prop({ type: [Identifier], required: true })
@@ -82,6 +82,42 @@ export class Patient extends Document {
 
   @Prop({ type: [Address] })
   address?: Address[];
+
+  @Prop({ type: [{ type: Types.ObjectId, ref: 'Observation' }], default: [] })
+  observations?: Types.ObjectId[];
 }
 
 export const PatientSchema = SchemaFactory.createForClass(Patient);
+
+PatientSchema.pre(
+  'deleteOne',
+  { document: true, query: false },
+  async function (next) {
+    try {
+      const patient = this as any;
+      const ObservationModel = patient.model('Observation');
+      await ObservationModel.deleteMany({ patient: patient._id }).exec();
+      next();
+    } catch (error) {
+      next(error);
+    }
+  },
+);
+
+PatientSchema.pre('deleteMany', async function (next) {
+  try {
+    const query = this as any;
+    const filter = query.getFilter();
+    const PatientModel = query.model;
+    const patients = await PatientModel.find(filter).exec();
+    if (!patients.length) {
+      return next();
+    }
+    const ObservationModel = query.model('Observation');
+    const patientIds = patients.map((patient) => patient._id);
+    await ObservationModel.deleteMany({ patient: { $in: patientIds } }).exec();
+    next();
+  } catch (error) {
+    next(error);
+  }
+});
