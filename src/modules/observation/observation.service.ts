@@ -5,7 +5,7 @@ import { ObservationRepository } from './observation.repository';
 export class ObservationService {
   constructor(private readonly observationRepository: ObservationRepository) {}
 
-  async getObservationsByPatientId(patientId: string) {
+  async getObservationsByPatientId(patientId: number) {
     return this.observationRepository.findByPatientId(patientId);
   }
 }

@@ -9,7 +9,11 @@ export class ObservationRepository {
     @InjectModel(Observation.name) private observationModel: Model<Observation>,
   ) {}
 
-  async findByPatientId(patientId: string): Promise<Observation[]> {
-    return this.observationModel.find({ patientId }).exec();
+  async findByPatientId(patientId: number): Promise<Observation[]> {
+    const subjectReference = `Patient/${patientId}`;
+
+    return this.observationModel
+      .find({ 'subject.reference': subjectReference })
+      .exec();
   }
 }
