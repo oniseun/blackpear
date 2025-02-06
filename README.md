@@ -47,7 +47,7 @@ Ensure your Docker software is running.
 
 ### 2\. Alternative: Manual Setup
 
-1.  Use Node.js 16:
+1.  Use Node.js 18.19.0:
     
         nvm use
     
@@ -65,7 +65,7 @@ Ensure your Docker software is running.
     
 5.  Start the application:
     
-        npm run start
+        npm run start:dev
     
 6.  Open your browser and head to **Swagger API Docs** to test the app: 
 
