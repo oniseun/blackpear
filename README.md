@@ -105,65 +105,63 @@ The API documentation (Swagger UI) is available at:
 --------------------
 
 
-data/
-├── observations/
-│   ├── observation1.json
-│   ├── observation2.json
-│   ├── observation3.json
-│   ├── observation4.json
-│   ├── observation5.json
-├── patients/
-│   ├── patient1.json
-│   ├── patient2.json
+blackpear
 
-node_modules/
-
-src/
-├── database/
-│   ├── database.module.ts
-├── modules/
-│   ├── observation/
-│   │   ├── observation.controller.ts
-│   │   ├── observation.dto.ts
-│   │   ├── observation.module.ts
-│   │   ├── observation.repository.ts
-│   │   ├── observation.schema.ts
-│   │   ├── observation.service.ts
-│   ├── patient/
-│   │   ├── patient.controller.ts
-│   │   ├── patient.dto.ts
-│   │   ├── patient.module.ts
-│   │   ├── patient.repository.ts
-│   │   ├── patient.schema.ts
-│   │   ├── patient.service.ts
-├── seeders/
-│   ├── observation.seed.ts
-│   ├── patient.seed.ts
-│   ├── seed.module.ts
-│   ├── seed.service.ts
-│   ├── seed.ts
-├── app.controller.spec.ts
-├── app.controller.ts
-├── app.module.ts
-├── app.service.ts
-├── main.ts
-
-test/
-├── app.e2e-spec.ts
-├── jest-e2e.json
-
-.env
-.envsample
-.eslintrc.js
-.gitignore
-.nvmrc
-.prettierrc
-docker-compose-db-only.yml
-docker-compose.yml
-Dockerfile
-nest-cli.json
-package-lock.json
-package.json
-README.md
-tsconfig.build.json
-tsconfig.json
+├── data
+│  ├── observations
+│  │  ├── observation1.json
+│  │  ├── observation2.json
+│  │  ├── observation3.json
+│  │  ├── observation4.json
+│  │  └── observation5.json
+│  └── patients
+│     ├── patient1.json
+│     └── patient2.json
+├── src
+│  ├── database
+│  │  └── database.module.ts
+│  ├── modules
+│  │  ├── observation
+│  │  │  ├── observation.controller.ts
+│  │  │  ├── observation.dto.ts
+│  │  │  ├── observation.module.ts
+│  │  │  ├── observation.repository.ts
+│  │  │  ├── observation.schema.ts
+│  │  │  └── observation.service.ts
+│  │  └── patient
+│  │     ├── patient.controller.ts
+│  │     ├── patient.dto.ts
+│  │     ├── patient.module.ts
+│  │     ├── patient.repository.ts
+│  │     ├── patient.schema.ts
+│  │     └── patient.service.ts
+│  ├── seeders
+│  │  ├── observation.seed.ts
+│  │  ├── patient.seed.ts
+│  │  ├── seed.module.ts
+│  │  ├── seed.service.ts
+│  │  └── seed.ts
+│  ├── .DS_Store
+│  ├── app.controller.spec.ts
+│  ├── app.controller.ts
+│  ├── app.module.ts
+│  ├── app.service.ts
+│  └── main.ts
+├── test
+│  ├── app.e2e-spec.ts
+│  └── jest-e2e.json
+├── .env
+├── .envsample
+├── .eslintrc.js
+├── .gitignore
+├── .nvmrc
+├── .prettierrc
+├── Dockerfile
+├── README.md
+├── docker-compose-db-only.yml
+├── docker-compose.yml
+├── nest-cli.json
+├── package-lock.json
+├── package.json
+├── tsconfig.build.json
+└── tsconfig.json
