@@ -24,7 +24,7 @@ The Blackpear Health API is designed to support healthcare professionals by prov
 ### 1️⃣ Clone the Repository
 
         git clone https://github.com/oniseun/blackpear.git
-        cd blackpear/backend
+        cd blackpear
 
 ### 2️⃣ Use the Correct Node Version
 
