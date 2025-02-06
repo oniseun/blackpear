@@ -1,0 +1,47 @@
+version: '3.8'
+
+networks:
+  blackpear_network:
+    driver: bridge
+
+services:
+  mongo:
+    image: mongo:6.0
+    container_name: blackpear_mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: blackpear
+      MONGO_INITDB_ROOT_PASSWORD: blackpear
+      MONGO_INITDB_DATABASE: blackpear
+    ports:
+      - "27017:27017"
+    networks:
+      - blackpear_network
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "db.runCommand({ ping: 1 })"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: .
+    container_name: blackpear_backend
+    working_dir: /usr/src/app
+    command: /bin/sh -c "npm run seed && npm run start:prod"
+    environment:
+      DB_USERNAME: blackpear
+      DB_PASSWORD: blackpear
+      DB_NAME: blackpear
+      DB_HOST: mongo
+      DB_PORT: 27017
+      DB_LOGGING: true
+      NODE_ENV: production
+    ports:
+      - "5050:5050"
+    depends_on:
+      mongo:
+        condition: service_healthy
+    volumes:
+      - .:/usr/src/app
+    networks:
+      - blackpear_network

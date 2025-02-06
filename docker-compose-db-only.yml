@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  db:
+    image: mongo:6.0
+    container_name: blackpear_mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: blackpear
+      MONGO_INITDB_ROOT_PASSWORD: blackpear
+      MONGO_INITDB_DATABASE: blackpear
+    ports:
+      - "27017:27017"
+    volumes:
+      - db_data:/data/db
+    networks:
+      - blackpear_db_network
+
+volumes:
+  db_data:
+
+networks:
+  blackpear_db_network:
+    driver: bridge
