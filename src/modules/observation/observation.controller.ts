@@ -56,6 +56,6 @@ export class ObservationController {
       return [];
     }
 
-    return observations.map(ObservationDto.fromEntity);
+    return observations.map(ObservationDto.fromSchema);
   }
 }

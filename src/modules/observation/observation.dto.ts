@@ -106,7 +106,7 @@ export class ObservationDto {
   })
   valueQuantity?: ValueQuantityDto;
 
-  static fromEntity(observation: Observation): ObservationDto {
+  static fromSchema(observation: Observation): ObservationDto {
     return {
       resourceType: observation.resourceType,
       id: observation.id,

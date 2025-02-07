@@ -50,7 +50,7 @@ describe('ObservationController', () => {
 
       const result = await observationController.getObservations(1);
 
-      expect(result).toEqual(mockObservations.map(ObservationDto.fromEntity));
+      expect(result).toEqual(mockObservations.map(ObservationDto.fromSchema));
       expect(
         observationService.getObservationsByPatientId,
       ).toHaveBeenCalledWith(1);
