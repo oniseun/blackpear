@@ -2,7 +2,6 @@ import {
   Controller,
   Get,
   Query,
-  ParseIntPipe,
   BadRequestException,
   NotFoundException,
 } from '@nestjs/common';
@@ -31,7 +30,6 @@ export class PatientController {
     name: 'surname',
     required: false,
     description: 'The last name (surname) of the patient.',
-    example: 'Smith',
   })
   @ApiResponse({
     status: 200,
