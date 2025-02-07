@@ -17,11 +17,10 @@ services:
     networks:
       - blackpear_network
     healthcheck:
-      test: ["CMD", "mongosh", "--username", "blackpear", "--password", "blackpear", "--authenticationDatabase", "admin", "--eval", "db.runCommand({ ping: 1 })"]
-      interval: 10s
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
       timeout: 5s
-      retries: 5
-      start_period: 20s
+      retries: 3
+      start_period: 15s
   mongo-express:
     image: mongo-express
     container_name: mongo_express
@@ -31,6 +30,14 @@ services:
       ME_CONFIG_MONGODB_ADMINPASSWORD: blackpear
       ME_CONFIG_MONGODB_SERVER: mongo
       ME_CONFIG_BASICAUTH: "false"
+      ME_CONFIG_SITE_ENABLE_ADMIN: "false"
+      ME_CONFIG_SITE_ENABLE_VERBOSE: "false"
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: "false"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8081"]
+      timeout: 5s
+      retries: 3
+      start_period: 15s
     depends_on:
       mongo:
         condition: service_healthy
@@ -49,13 +56,13 @@ services:
       DB_PASSWORD: blackpear
       DB_NAME: blackpear
       DB_HOST: mongo
-      DB_PORT: 27018
+      DB_PORT: 27017
       DB_LOGGING: true
       NODE_ENV: production
     ports:
       - "5050:5050"
     depends_on:
-      mongo:
+      mongo-express:
         condition: service_healthy
     volumes:
       - .:/usr/src/app

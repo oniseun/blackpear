@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { MongooseModule } from '@nestjs/mongoose';
+import { MongooseModule, MongooseModuleFactoryOptions } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Patient, PatientSchema } from '../modules/patient/patient.schema';
 import {
@@ -28,7 +28,9 @@ import {
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: async (configService: ConfigService) => {
+      useFactory: async (
+        configService: ConfigService,
+      ): Promise<MongooseModuleFactoryOptions> => {
         const DB_USERNAME = configService.get<string>('DB_USERNAME');
         const DB_PASSWORD = configService.get<string>('DB_PASSWORD');
         const DB_HOST = configService.get<string>('DB_HOST');

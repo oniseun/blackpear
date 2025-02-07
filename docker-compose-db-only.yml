@@ -16,11 +16,10 @@ services:
     networks:
       - blackpear_db_network
     healthcheck:
-      test: ["CMD", "mongosh", "--username", "blackpear", "--password", "blackpear", "--authenticationDatabase", "admin", "--eval", "db.runCommand({ ping: 1 })"]
-      interval: 10s
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
       timeout: 5s
-      retries: 5
-      start_period: 20s
+      retries: 3
+      start_period: 15s
 
   mongo-express:
     image: mongo-express
