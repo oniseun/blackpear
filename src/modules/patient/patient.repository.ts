@@ -9,11 +9,19 @@ export class PatientRepository {
     @InjectModel(Patient.name) private patientModel: Model<Patient>,
   ) {}
 
-  async findByNhsNumber(patientNhsNumber: number): Promise<Patient[]> {
+  async findByNhsNumber(patientNhsNumber: string): Promise<Patient[]> {
     return this.patientModel
       .find({
         identifier: {
-          $elemMatch: { label: 'NHS', value: patientNhsNumber },
+          $elemMatch: {
+            $or: [
+              { label: 'NHS', value: patientNhsNumber },
+              {
+                system: 'https://fhir.nhs.uk/Id/nhs-number',
+                value: patientNhsNumber,
+              },
+            ],
+          },
         },
       })
       .exec();

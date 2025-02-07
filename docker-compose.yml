@@ -13,15 +13,31 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: blackpear
       MONGO_INITDB_DATABASE: blackpear
     ports:
-      - "27017:27017"
+      - "27018:27017"
     networks:
       - blackpear_network
     healthcheck:
-      test: ["CMD", "mongo", "--eval", "db.runCommand({ ping: 1 })"]
-      interval: 5s
+      test: ["CMD", "mongosh", "--username", "blackpear", "--password", "blackpear", "--authenticationDatabase", "admin", "--eval", "db.runCommand({ ping: 1 })"]
+      interval: 10s
       timeout: 5s
       retries: 5
-
+      start_period: 20s
+  mongo-express:
+    image: mongo-express
+    container_name: mongo_express
+    restart: unless-stopped
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: blackpear
+      ME_CONFIG_MONGODB_ADMINPASSWORD: blackpear
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_BASICAUTH: "false"
+    depends_on:
+      mongo:
+        condition: service_healthy
+    ports:
+      - "8081:8081"
+    networks:
+      - blackpear_network
   backend:
     build:
       context: .
@@ -33,7 +49,7 @@ services:
       DB_PASSWORD: blackpear
       DB_NAME: blackpear
       DB_HOST: mongo
-      DB_PORT: 27017
+      DB_PORT: 27018
       DB_LOGGING: true
       NODE_ENV: production
     ports:
@@ -45,3 +61,4 @@ services:
       - .:/usr/src/app
     networks:
       - blackpear_network
+

@@ -5,7 +5,7 @@ import { PatientRepository } from './patient.repository';
 export class PatientService {
   constructor(private readonly patientRepository: PatientRepository) {}
 
-  async getPatientByNhsNumber(nhsNumber: number) {
+  async getPatientByNhsNumber(nhsNumber: string) {
     return this.patientRepository.findByNhsNumber(nhsNumber);
   }
 

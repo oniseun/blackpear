@@ -24,7 +24,7 @@ export class PatientController {
   @ApiQuery({
     name: 'nhsNumber',
     required: false,
-    description: 'The NHS number of the patient (must be numeric).',
+    description: 'The NHS number of the patient .',
     example: 1111111112,
   })
   @ApiQuery({
@@ -48,12 +48,17 @@ export class PatientController {
     description: 'No patients found matching the search criteria.',
   })
   async getPatient(
-    @Query('nhsNumber', ParseIntPipe) nhsNumber?: number,
+    @Query('nhsNumber') nhsNumber?: string,
     @Query('surname') surname?: string,
   ): Promise<PatientDto[]> {
     if (!nhsNumber && !surname) {
       throw new BadRequestException(
         'Either nhsNumber or surname must be provided.',
+      );
+    }
+    if (nhsNumber && surname) {
+      throw new BadRequestException(
+        'Only one of nhsNumber or surname must be provided.',
       );
     }
 

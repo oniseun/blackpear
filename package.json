@@ -11,7 +11,6 @@
     "docker:app": "docker-compose up --build",
     "docker:db": "docker-compose -f docker-compose-db-only.yml up --build",
     "start": "nest start",
-    "start:db": "docker-compose up -d",
     "setup": "cp .envsample .env; npm i",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",

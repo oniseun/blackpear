@@ -15,10 +15,10 @@ class IdentifierDto {
   system: string;
 
   @ApiProperty({
-    example: 1111111112,
-    description: 'The NHS number as a numeric value',
+    example: '1111111112',
+    description: 'The NHS number as a string',
   })
-  value: number;
+  value: string;
 }
 
 class NameDto {

@@ -8,8 +8,10 @@ class Identifier {
   @Prop({ required: true })
   system: string;
 
-  @Prop({ required: true, type: Number })
-  value: number;
+  @Prop({
+    required: true,
+  })
+  value: string;
 }
 
 class Name {
@@ -88,36 +90,3 @@ export class Patient extends Document {
 }
 
 export const PatientSchema = SchemaFactory.createForClass(Patient);
-
-PatientSchema.pre(
-  'deleteOne',
-  { document: true, query: false },
-  async function (next) {
-    try {
-      const patient = this as any;
-      const ObservationModel = patient.model('Observation');
-      await ObservationModel.deleteMany({ patient: patient._id }).exec();
-      next();
-    } catch (error) {
-      next(error);
-    }
-  },
-);
-
-PatientSchema.pre('deleteMany', async function (next) {
-  try {
-    const query = this as any;
-    const filter = query.getFilter();
-    const PatientModel = query.model;
-    const patients = await PatientModel.find(filter).exec();
-    if (!patients.length) {
-      return next();
-    }
-    const ObservationModel = query.model('Observation');
-    const patientIds = patients.map((patient) => patient._id);
-    await ObservationModel.deleteMany({ patient: { $in: patientIds } }).exec();
-    next();
-  } catch (error) {
-    next(error);
-  }
-});

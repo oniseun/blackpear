@@ -45,6 +45,10 @@ Ensure your Docker software is running.
 
         http://localhost:5050/api
 
+3.  Open your browser and head to **Mongo Express UI** to manage the mongodb database in the express ui: 
+
+        http://0.0.0.0:8081
+
 ### 2\. Alternative: Manual Setup
 
 1.  Use Node.js 18.19.0:
@@ -70,6 +74,11 @@ Ensure your Docker software is running.
 6.  Open your browser and head to **Swagger API Docs** to test the app: 
 
         http://localhost:5050/api
+
+7.  Open your browser and head to **Mongo Express UI** to manage the mongodb database: 
+
+        http://0.0.0.0:8081
+
 
 🧪 Running Tests
 ----------------
