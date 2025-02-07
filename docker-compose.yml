@@ -32,7 +32,6 @@ services:
       ME_CONFIG_BASICAUTH: "false"
       ME_CONFIG_SITE_ENABLE_ADMIN: "false"
       ME_CONFIG_SITE_ENABLE_VERBOSE: "false"
-      ME_CONFIG_MONGODB_ENABLE_ADMIN: "false"
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://localhost:8081"]
       timeout: 5s
