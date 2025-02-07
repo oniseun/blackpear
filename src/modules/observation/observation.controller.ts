@@ -1,11 +1,4 @@
-import {
-  Controller,
-  Get,
-  Query,
-  ParseIntPipe,
-  BadRequestException,
-  HttpCode,
-} from '@nestjs/common';
+import { Controller, Get, Query, BadRequestException } from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ObservationService } from './observation.service';
 import { ObservationDto } from './observation.dto';
@@ -41,12 +34,15 @@ export class ObservationController {
     status: 400,
     description: 'Bad request. Missing or invalid patientId parameter.',
   })
-  @HttpCode(200)
   async getObservations(
-    @Query('patientId', ParseIntPipe) patientId: number,
+    @Query('patientId') patientId: number,
   ): Promise<ObservationDto[]> {
     if (!patientId) {
       throw new BadRequestException('patientId is required.');
+    }
+
+    if (isNaN(patientId)) {
+      throw new BadRequestException('patientId must be a valid number.');
     }
 
     const observations =

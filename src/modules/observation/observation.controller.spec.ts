@@ -74,5 +74,13 @@ describe('ObservationController', () => {
         observationController.getObservations(undefined as any),
       ).rejects.toThrow(new BadRequestException('patientId is required.'));
     });
+
+    it('should throw BadRequestException when patientId is not a valid number', async () => {
+      await expect(
+        observationController.getObservations('string99' as unknown as number),
+      ).rejects.toThrow(
+        new BadRequestException('patientId must be a valid number.'),
+      );
+    });
   });
 });

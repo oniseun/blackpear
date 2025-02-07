@@ -40,9 +40,7 @@
     "pino": "^9.1.0",
     "pino-pretty": "^11.1.0",
     "reflect-metadata": "^0.1.13",
-    "rimraf": "^6.0.1",
     "rxjs": "^7.8.1",
-    "superagent": "^10.1.1",
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
@@ -82,7 +80,9 @@
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "collectCoverageFrom": [
-      "**/*.(t|j)s"
+      "**/*.controller.ts",
+      "**/*.service.ts",
+      "**/*.repository.ts"
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
