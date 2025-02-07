@@ -50,7 +50,7 @@ describe('PatientController', () => {
         undefined,
       );
 
-      expect(result).toEqual(mockPatients.map(PatientDto.fromEntity));
+      expect(result).toEqual(mockPatients.map(PatientDto.fromSchema));
       expect(patientService.getPatientByNhsNumber).toHaveBeenCalledWith(
         '1111111112',
       );
@@ -65,7 +65,7 @@ describe('PatientController', () => {
 
       const result = await patientController.getPatient(undefined, 'Smith');
 
-      expect(result).toEqual(mockPatients.map(PatientDto.fromEntity));
+      expect(result).toEqual(mockPatients.map(PatientDto.fromSchema));
       expect(patientService.getPatientsBySurname).toHaveBeenCalledWith('Smith');
       expect(spyNhsNumber).not.toHaveBeenCalled();
     });

@@ -74,6 +74,6 @@ export class PatientController {
       );
     }
 
-    return patients.map(PatientDto.fromEntity);
+    return patients.map(PatientDto.fromSchema);
   }
 }

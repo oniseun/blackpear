@@ -142,7 +142,7 @@ export class PatientDto {
   @ApiProperty({ type: [AddressDto], description: 'List of patient addresses' })
   address?: AddressDto[];
 
-  static fromEntity(patient: Patient): PatientDto {
+  static fromSchema(patient: Patient): PatientDto {
     return {
       resourceType: patient.resourceType,
       id: patient.id,
